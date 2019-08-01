@@ -30,7 +30,6 @@ def criar_antena(tamx, tamy, angulo, x, y):
                            height=tamx,
                            axis=mp.Vector3(np.cos(math.radians(-angulo)),np.sin(math.radians(-angulo)),0),
                            center=mp.Vector3(dx,-dy),
-                           material=mp.Medium(epsilon=12))
-                   ]
+                           material=mp.Medium(epsilon=12))]
 
     return antenna
