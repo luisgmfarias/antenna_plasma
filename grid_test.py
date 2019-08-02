@@ -44,18 +44,28 @@ sim = mp.Simulation(cell_size=cell,
                     boundary_layers=pml_layers)
 
 
-def get_slice(sim):    
-    plt.imshow(sim.get_array(component=mp.Ez),interpolation="spline36")
-    plt.draw()
-    plt.pause(0.05)
+#def get_slice(sim):    
+#   plt.imshow(sim.get_array(component=mp.Ez),interpolation="spline36")
+#   plt.draw()
+#   plt.pause(0.05)
 
-sim.run(mp.at_every(0.6, get_slice), until=100)
-sim.run(mp.at_every(0.6, get_slice), until=100)
+#sim.run(mp.at_every(0.6, get_slice), until=100)
 #sim.run(until=100)
 
-eps_data = sim.get_array(component=mp.Dielectric)
+def gerar_grafico(n):
+    sim.run(until=50)
+    plt.plot(sim.get_array(component=mp.Ez)[n])
+    plt.show()
+
+#ponto qualquer:
+n = 150 
+
+gerar_grafico(150)
 
 
-plt.figure()
-plt.imshow(eps_data.transpose(), interpolation='spline36', cmap='binary')
-plt.show()
+#eps_data = sim.get_array(component=mp.Dielectric)
+
+
+#plt.figure()
+#plt.imshow(eps_data.transpose(), interpolation='spline36', cmap='binary')
+#plt.show()
