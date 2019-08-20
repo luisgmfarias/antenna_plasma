@@ -1,6 +1,7 @@
 import meep as mp
 import matplotlib.pyplot as plt
 import antenna
+import numpy as np
 
 '''
 
@@ -10,8 +11,8 @@ UTFPR/CP 2019
 
 '''
 
-#GERAR FONTE DE DENTRO DA ANTENA
-#FAZER GRAFICO DE CAMPO ELETRICO DENTRO DE PONTO NA CELULA
+#Tempo total da simulação:
+total_time=60
 
 #Aqui estamos criando e definindo as proporções do grid da simulação
 lx=30
@@ -24,7 +25,7 @@ cell = mp.Vector3(lx,ly,0)
 pml_layers = [mp.PML(1.0)]
 
 #Resolução
-resolution = 45
+resolution = 30
 
 #Criando mirroring para paralelização
 symmetries = [mp.Mirror(mp.Y, phase=+1)]
@@ -42,26 +43,40 @@ sim = mp.Simulation(cell_size=cell,
                     sources=sources,
                     symmetries=symmetries,
                     boundary_layers=pml_layers)
+'''
+#Simulação da onda a cores
 
-
-#def get_slice(sim):    
-#   plt.imshow(sim.get_array(component=mp.Ez),interpolation="spline36")
-#   plt.draw()
-#   plt.pause(0.05)
-
-#sim.run(mp.at_every(0.6, get_slice), until=100)
-#sim.run(until=100)
-
-def gerar_grafico(n):
-    sim.run(until=50)
-    plt.plot(sim.get_array(component=mp.Ez)[n])
+def get_slice(sim):    
+    plt.imshow(sim.get_array(component=mp.Ez).transpose(),interpolation="spline36")
+    plt.draw()
     plt.show()
 
-#ponto qualquer:
-n = 150 
 
-gerar_grafico(150)
+sim.run(mp.at_every(0.05, get_slice), until=60)
+'''
 
+#Abaixo é gerado o gráfico da onda no ponto central do grid
+
+def gerar_grafico(Ez_point):
+    plt.plot(Ez_point)
+    plt.xlabel("Tempo")
+    plt.ylabel("Amplitude")
+    plt.show()
+
+Ez_point = np.zeros(int(total_time/0.05)+1)
+
+t=0
+
+y_point,x_point=int(ly*resolution/2),int(lx*resolution/2)
+
+def read_Ez(sim):
+    global t
+    Ez_point[t]=sim.get_array(component=mp.Ez)[y_point,x_point]
+    t+=1
+
+sim.run(mp.at_every(0.05, read_Ez), until=total_time)
+
+gerar_grafico(Ez_point)
 
 #eps_data = sim.get_array(component=mp.Dielectric)
 
