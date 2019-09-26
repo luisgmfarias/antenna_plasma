@@ -43,16 +43,18 @@ sim = mp.Simulation(cell_size=cell,
                     sources=sources,
                     symmetries=symmetries,
                     boundary_layers=pml_layers)
-'''
+
 #Simulação da onda a cores
 
 def get_slice(sim):    
-    plt.imshow(sim.get_array(component=mp.Ez).transpose(),interpolation="spline36")
+    plt.imshow(sim.get_array(component=abs(mp.Ez)).transpose(),interpolation="spline36")
     plt.draw()
-    plt.show()
+    plt.pause(0.5)
 
 
-sim.run(mp.at_every(0.05, get_slice), until=60)
+
+sim.run(mp.at_every(1, get_slice), until=100)
+
 '''
 
 #Abaixo é gerado o gráfico da onda no ponto central do grid
@@ -67,7 +69,7 @@ Ez_point = np.zeros(int(total_time/0.05)+1)
 
 t=0
 
-y_point,x_point=int(ly*resolution/2),int(lx*resolution/2)
+y_point,x_point=int(100),int(100)
 
 def read_Ez(sim):
     global t
@@ -84,3 +86,4 @@ gerar_grafico(Ez_point)
 #plt.figure()
 #plt.imshow(eps_data.transpose(), interpolation='spline36', cmap='binary')
 #plt.show()
+'''
