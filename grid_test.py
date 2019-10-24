@@ -39,7 +39,8 @@ sources = [mp.Source(src=mp.GaussianSource(fcen,fwidth=df),
 
 sim = mp.Simulation(cell_size=cell,
                     resolution=resolution,
-                    geometry=antenna.criar_antena(5, .5, 50, x, y),
+                    #geometry=antenna.criar_antena(5, .5, 50, x, y),
+                    load_structure="epsilon.h5",
                     sources=sources,
                     symmetries=symmetries,
                     boundary_layers=pml_layers)
@@ -53,7 +54,9 @@ def get_slice(sim):
 
 
 
-sim.run(mp.at_every(1, get_slice), until=100)
+sim.run(mp.at_every(10, get_slice), until=100)
+
+#sim.dump_structure("epsilon.h5")
 
 '''
 

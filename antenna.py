@@ -17,19 +17,25 @@ def criar_antena(tamx, tamy, angulo, x, y):
 
     antenna = [mp.Block(mp.Vector3(tamx,tamy,0),
                         center=mp.Vector3(b1x,b1y),
-                        material=mp.Medium(epsilon=12)),
+                        material=mp.metal),
                mp.Block(mp.Vector3(tamx,tamy,0),
                         center=mp.Vector3(b1x,-b1y),
-                        material=mp.Medium(epsilon=12)),
+                        material=mp.metal),
                mp.Cylinder(radius=tamy/2,
                             height=tamx,
                             axis=mp.Vector3(np.cos(math.radians(angulo)),np.sin(math.radians(angulo)),0),
                             center=mp.Vector3(dx,dy),
-                            material=mp.Medium(epsilon=12)),
+                            material=mp.metal),
                mp.Cylinder(radius=tamy/2,
                            height=tamx,
                            axis=mp.Vector3(np.cos(math.radians(-angulo)),np.sin(math.radians(-angulo)),0),
                            center=mp.Vector3(dx,-dy),
-                           material=mp.Medium(epsilon=12))]
+                           material=mp.metal)]
+
+    
 
     return antenna
+
+if __name__ == "__main__":
+    criar_antena(5, .5, 50, 15, 15)
+    
