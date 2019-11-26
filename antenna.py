@@ -2,7 +2,7 @@ import meep as mp
 import math
 import numpy as np
 
-def criar_antena(tamx, tamy, angulo, x, y):  
+def create_antenna(tamx, tamy, angulo, x, y):  
 
     b1x = -x + (tamx/2)
     b1y = y/7
