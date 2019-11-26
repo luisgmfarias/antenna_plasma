@@ -96,7 +96,7 @@ if plot_slice :
     if is_plasma:
         np.save("sem_plasma", Ez_point)
     else:
-        np.save("com plasma", Ez_point)
+        np.save("com_plasma", Ez_point)
         
     gerar_grafico(Ez_point)
 
